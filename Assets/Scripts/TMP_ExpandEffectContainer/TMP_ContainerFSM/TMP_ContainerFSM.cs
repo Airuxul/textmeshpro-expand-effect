@@ -45,8 +45,8 @@ partial class TMP_ExpandEffectContainer
       }
       public void OnEnter()
       {
-          container.gameObject.SetActive(false);
           container.sleepAction?.Invoke(container);
+          container.gameObject.SetActive(false);
       }
       public void OnUpdate() {}
   }
@@ -63,20 +63,13 @@ partial class TMP_ExpandEffectContainer
       }
       public void OnEnter()
       {
-          container.gameObject.SetActive(true);
-          container.expandTyping.StartTyping();
+         container.StartTyping();
       }
       public void OnUpdate()
       {
           //ForceMeshUpdate()可以强制重新生成网格
           //如果没有该函数则会导致无法获取顶点坐标或者对顶点操作会一直累积
-          container.m_TextComponent.ForceMeshUpdate();
-          container.AllRichTextEffect();
-          if (container.expandTyping.Typing())
-          {
-              container.TransitionState(TMP_StatusEnum.Completed);
-          }
-          
+          container.Typing();
       }
   }
   
@@ -96,18 +89,22 @@ partial class TMP_ExpandEffectContainer
           afterCompletedTime = 0;
           //完全显示
           container.m_TextComponent.color = new Color(1, 1, 1, 1);
+          //调用回调函数
           container.completedAction?.Invoke(container);
       }
+      
       public void OnUpdate()
       {
           container.m_TextComponent.ForceMeshUpdate();
-          container.AllRichTextEffect();
-          if (container.completedSleepTime == -1)
+          container.RichTextEffect();
+          
+          if (container.completedToSleepTime < 0)
           {
               return;
           }
+          
           afterCompletedTime += Time.deltaTime;
-          if (afterCompletedTime > container.completedSleepTime)
+          if (afterCompletedTime > container.completedToSleepTime)
           {
               container.TransitionState(TMP_StatusEnum.Sleeping);
           }

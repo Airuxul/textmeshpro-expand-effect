@@ -28,9 +28,9 @@ public class TMP_FloatRichText : TMP_BaseRichText
                 }
     
                 int materialIndex =textInfo.characterInfo[i].materialReferenceIndex;
-    
+                
                 var verts = textInfo.meshInfo[materialIndex].vertices;
-    
+
                 for (int j = 0; j < 4; j++)
                 {
                     var orig = verts[charInfo.vertexIndex + j];

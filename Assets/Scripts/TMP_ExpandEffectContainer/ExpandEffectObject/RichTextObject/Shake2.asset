@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Shake2
   m_EditorClassIdentifier: 
   richTextName: shake2
-  shakeDegree: 2.5
-  shakeFrequency: 0.1
+  shakeDegree: 3
+  shakeFrequency: 15

@@ -12,7 +12,7 @@ public class TMP_ShakeRichText : TMP_BaseRichText
     [Header("晃动幅度")]
     public float shakeDegree=1;
     [Header("晃动频率")]
-    public float shakeFrequency = 0.1f;
+    public float shakeFrequency = 100f;
     
     private float currentTime;
     /// <summary>
@@ -28,7 +28,7 @@ public class TMP_ShakeRichText : TMP_BaseRichText
     public override void StartEffect()
     {
         currentOffset = new List<Vector2>();
-        currentTime = shakeFrequency;
+        currentTime = 1.0f/shakeFrequency;
     }
     
     public override void RichTextEffect(ref TMP_TextInfo textInfo, List<Vector2> ranges)
@@ -36,7 +36,7 @@ public class TMP_ShakeRichText : TMP_BaseRichText
         currentTime += Time.deltaTime;
         
         //到达下个时间则重新创建偏移向量组
-        if (currentTime > shakeFrequency)
+        if (currentTime > 1.0f/shakeFrequency)
         {
             currentTime = 0;
             currentOffset.Clear();

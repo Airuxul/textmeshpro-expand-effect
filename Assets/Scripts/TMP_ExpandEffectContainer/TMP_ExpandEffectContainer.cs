@@ -63,10 +63,11 @@ public partial class TMP_ExpandEffectContainer : MonoBehaviour
     /// </summary>
     private TMP_TextInfo afterChangeInfo;
 
+
     /// <summary>
     /// 输出完所有字符后多久文本消失
     /// </summary>
-    private float completedSleepTime=-1;
+    private float completedToSleepTime=-1;
     
     /// <summary>
     /// 输出完所有字符回调函数
@@ -99,7 +100,6 @@ public partial class TMP_ExpandEffectContainer : MonoBehaviour
         if (m_TextComponent == null)
         {
             m_TextComponent = GetComponent<TMP_Text>();
-            expandTyping.SetTMP(m_TextComponent);
         }
         //初始化根据富文本字符串集初始化
         if (richTextRangeDic == null)
@@ -138,7 +138,7 @@ public partial class TMP_ExpandEffectContainer : MonoBehaviour
         effectStack.Clear();
 
         m_TextComponent.text=GetRichTextIndex(str);
-        completedSleepTime = _completedToSleepTime;
+        completedToSleepTime = _completedToSleepTime;
         completedAction = _completedAction;
         sleepAction = _sleepAction;
         
@@ -152,8 +152,8 @@ public partial class TMP_ExpandEffectContainer : MonoBehaviour
     {
         Initialization();
         TransitionState(TMP_StatusEnum.Completed);
+        
     }
-    
     /// <summary>
     /// 切换至睡眠状态即隐藏该文本
     /// </summary>
@@ -165,13 +165,14 @@ public partial class TMP_ExpandEffectContainer : MonoBehaviour
     
     private void Update()
     {
+        Initialization();
         currentState.OnUpdate();
     }
     
     /// <summary>
     /// 将所有的富文本效果实现并将textinfo提交到TMP中更新Mesh
     /// </summary>
-    void AllRichTextEffect()
+    void RichTextEffect()
     {
         //没有效果
         if (expandEffects.Count == 0)
@@ -180,20 +181,39 @@ public partial class TMP_ExpandEffectContainer : MonoBehaviour
         }
         
         //获取Info并根据expandEffects对afterChangeInfo进行处理
-        afterChangeInfo = m_TextComponent.textInfo;
-
         foreach (var effect in  expandEffects)
         {
             effect.RichTextEffect(ref afterChangeInfo,richTextRangeDic[effect.richTextName]);
         }
-        
         //将afterChangeInfo提交到TMP中更新
-        for (var i = 0; i < m_TextComponent.textInfo.meshInfo.Length; i++)
+        m_TextComponent.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices);
+    }
+
+    void StartTyping()
+    {
+        gameObject.SetActive(true);
+        
+        m_TextComponent.color = new Color(1, 1, 1, 0);
+        
+        //强制生成Mesh，如果不使用该函数则会导致textInfo为空值
+        m_TextComponent.ForceMeshUpdate();
+        afterChangeInfo = m_TextComponent.textInfo;
+        expandTyping.StartTyping(ref afterChangeInfo);
+    }
+    
+    /// <summary>
+    /// 打印函数，包含富文本的操作
+    /// </summary>
+    void Typing()
+    {
+        //强制生成Mesh，如果不使用该函数则会导致富文本效果一直累加
+        m_TextComponent.ForceMeshUpdate();
+        if (expandTyping.Typing(ref afterChangeInfo))
         {
-            var meshInfo = m_TextComponent.textInfo.meshInfo[i];
-            meshInfo.mesh.vertices = meshInfo.vertices;
-            m_TextComponent.UpdateGeometry(meshInfo.mesh, i);
+            TransitionState(TMP_StatusEnum.Completed);
         }
+        RichTextEffect();
+        m_TextComponent.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32 | TMP_VertexDataUpdateFlags.Vertices);
     }
     
     /// <summary>

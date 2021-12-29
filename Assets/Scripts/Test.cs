@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class Test : MonoBehaviour
@@ -9,16 +10,15 @@ public class Test : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            // _Contianer.ShowText(str,2, 
-            //     (contianer)=>
-            //     {
-            //         Debug.Log("完全显示");
-            //     },
-            //     (container) =>
-            //     {
-            //         Debug.Log("隐藏文本");
-            //     });
-            _Contianer.ShowText(str);
+            _Contianer.ShowText(str,2, 
+                (contianer)=>
+                {
+                    Debug.Log("完全显示");
+                },
+                (container) =>
+                {
+                    Debug.Log("隐藏文本");
+                });
         }
         if (Input.GetKeyDown(KeyCode.S))
         {

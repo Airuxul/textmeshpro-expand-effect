@@ -259,7 +259,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 100}
+  m_SizeDelta: {x: 600, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &345280191
 MonoBehaviour:
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efe0cd5965cf6b4b8bea75baf3b9416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expandTyping: {fileID: 11400000, guid: 2be87e0d742baef46add29abe7a799e1, type: 2}
+  expandTyping: {fileID: 11400000, guid: 0c29ded457c965741ae2f601265147b3, type: 2}
   expandEffects:
   - {fileID: 11400000, guid: 910283c1e3df1044ea71683677d1c9ff, type: 2}
   - {fileID: 11400000, guid: 525cc2b2f5e92e749888e2eac720c30c, type: 2}
@@ -333,8 +333,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -416,11 +416,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Contianer: {fileID: 345280191}
-  str: '<float>0123456789</float>
+  _uiTextExpand: {fileID: 0}
+  str: 'FloatEffect:<float>0123456789</float>
 
-    <shake1>0123456789</shake1>
+    ShakeEffect1:<shake1>0123456789</shake1>
 
-    <shake2>0123456789</shake2>'
+    ShakeEffect2:<shake2>0123456789</shake2>'
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

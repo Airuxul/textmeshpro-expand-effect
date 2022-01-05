@@ -31,4 +31,4 @@
 
 > 随意用嗷，之后看情况更新，里面脚本实现详情可以去我的博客上查看
 
-[个人博客](https://yuzurihainori.top)
+[个人博客相关文章](https://yuzurihainori.top/unity/%E4%BB%A5TextMeshPro%E4%B8%BA%E5%9F%BA%E7%A1%80%E7%9A%84%E6%96%87%E6%9C%AC%E6%95%88%E6%9E%9C%E6%8B%93%E5%B1%95.html)
